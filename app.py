@@ -1,37 +1,51 @@
-from flask import Flask, render_template, request, jsonify
-import db_funciones  # Tesista 2 Completo
+from flask import Flask, render_template, request, redirect, url_for
+import db_funciones 
 
 app = Flask(__name__)
 app.secret_key = 'secreto_coordinador_baruch'
 
-@app.route('/')
+# --- RUTA PRINCIPAL (Tesista 6) ---
+@app.route("/")
 def index():
-    # Tesista 6
-    return "<h1>Panel de Control de Baruch</h1><p>Simulador del equipo listo.</p>"
+    datos_lugares = db_funciones.obtener_lugares()
+    return render_template("index.html", lugares=datos_lugares)
 
-# --- PRUEBA PARA TESISTA 3 ---
-@app.route('/test/usuario/<correo>')
-def test_usuario(correo):
-    user = db_funciones.obtener_usuario_por_correo(correo)
-    return jsonify({"resultado": user if user else "Usuario no encontrado"})
+# --- MÓDULO DE LUGARES (Tesista 4) ---
 
-# --- PRUEBA PARA TESISTA 4 ---
-@app.route('/test/lugares')
-def test_lugares():
-    data = db_funciones.obtener_lugares()
-    return jsonify({"total": len(data), "lista": data})
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    if request.method == "POST":
+        id_l = int(request.form["lugar_id"])
+        nom = request.form["nombre"].strip()
+        dir = request.form["direccion"].strip()
+        map_url = request.form.get("mapa", "").strip()
+        desc = request.form.get("descripcion", "").strip()
+        usr_id = int(request.form["usuario_id"])
 
-# --- PRUEBA PARA TESISTA 5 ---
-@app.route('/test/promedio/<int:id>')
-def test_promedio(id):
-    avg = db_funciones.obtener_promedio_por_lugar(id)
-    return jsonify({"lugar_id": id, "promedio_estrellas": avg})
+        db_funciones.insertar_lugar(id_l, nom, dir, map_url, desc, usr_id)
+        return redirect(url_for("index"))
+    
+    return render_template("add.html")
 
-# --- PRUEBA PARA TESISTA 7 ---
-@app.route('/test/top')
-def test_top():
-    top = db_funciones.obtener_lugares_mejor_calificados()
-    return jsonify({"mejores_lugares": top})
+@app.route("/edit/<int:lugar_id>", methods=["GET", "POST"])
+def edit(lugar_id):
+    if request.method == "POST":
+        nom = request.form["nombre"].strip()
+        dir = request.form["direccion"].strip()
+        map_url = request.form.get("mapa", "").strip()
+        desc = request.form.get("descripcion", "").strip()
 
-if __name__ == '__main__':
+        db_funciones.actualizar_lugar(lugar_id, nom, dir, map_url, desc)
+        return redirect(url_for("index"))
+
+    lugar_actual = db_funciones.obtener_lugar_por_id(lugar_id)
+    return render_template("edit.html", lugar=lugar_actual)
+
+@app.route("/delete/<int:lugar_id>", methods=["POST"])
+def delete(lugar_id):
+    # Borrado físico solicitado por el Tesista 4
+    db_funciones.eliminar_lugar(lugar_id)
+    return redirect(url_for("index"))
+
+if __name__ == "__main__":
     app.run(debug=True, port=5000)
