@@ -1,27 +1,37 @@
-
-from flask import Flask, render_template
-import database  # Tesista 2
-import auth      # Tesista 3
-import places    # Tesista 4
-import reviews   # Tesista 5
-import stats     # Tesista 7
+from flask import Flask, render_template, request, jsonify
+import db_funciones  # Tesista 2 Completo
 
 app = Flask(__name__)
-app.secret_key = 'clave_secreta_del_equipo' 
-
-# --- RUTAS PRINCIPALES ---
+app.secret_key = 'secreto_coordinador_baruch'
 
 @app.route('/')
 def index():
     # Tesista 6
-    return render_template('index.html')
+    return "<h1>Panel de Control de Baruch</h1><p>Simulador del equipo listo.</p>"
 
-# --- CONEXIÓN CON LOS MÓDULOS DEL EQUIPO ---
+# --- PRUEBA PARA TESISTA 3 ---
+@app.route('/test/usuario/<correo>')
+def test_usuario(correo):
+    user = db_funciones.obtener_usuario_por_correo(correo)
+    return jsonify({"resultado": user if user else "Usuario no encontrado"})
 
-@app.route('/dashboard')
-def dashboard():
-    return "Panel de Control - Aquí se verán las estadísticas del Tesista 7"
+# --- PRUEBA PARA TESISTA 4 ---
+@app.route('/test/lugares')
+def test_lugares():
+    data = db_funciones.obtener_lugares()
+    return jsonify({"total": len(data), "lista": data})
+
+# --- PRUEBA PARA TESISTA 5 ---
+@app.route('/test/promedio/<int:id>')
+def test_promedio(id):
+    avg = db_funciones.obtener_promedio_por_lugar(id)
+    return jsonify({"lugar_id": id, "promedio_estrellas": avg})
+
+# --- PRUEBA PARA TESISTA 7 ---
+@app.route('/test/top')
+def test_top():
+    top = db_funciones.obtener_lugares_mejor_calificados()
+    return jsonify({"mejores_lugares": top})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
-
