@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Escribir reseña</title>
+</head>
+<body>
+
+<h2>Reseña del lugar {{ lugar_id }}</h2>
+
+<form method = "POST" action = "/lugares/{{ lugar_id }}/resena">
+  <label>Calificación (1 a 5)</label><br>
+  <input type = "number" name = "calificacion" min = "1" max = "5" required><br><br>
+
+  <label>Comentario (mínimo 10 caracteres)</label><br>
+  <textarea name = "comentario" rows = "4" cols = "40" required></textarea><br><br>
+
+  <button type = "submit">Guardar reseña</button>
+</form>
+
+<br>
+<a href = "/resenas">Volver a inicio</a>
+
+</body>
+</html>

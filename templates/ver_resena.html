@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ver reseñas</title>
+</head>
+<body>
+
+<h2>Reseñas de {{ lugar_id }}</h2>
+
+<p><b>Promedio de calificacion:</b> {{ promedio if promedio is not none else "Sin reseñas" }} </p>
+
+<a href="/resenas">Volver a inicio</a>
+<hr>
+
+{% if resenas and resenas|length > 0 %}
+<table border = "1" cellpadding = "8">
+  <tr>
+    <th>Usuario ID</th>
+    <th>Estrellas</th>
+    <th>Comentario</th>
+    <th>Fecha</th>
+  </tr>
+
+  {% for r in resenas %}
+  <tr>
+    <td>{{ r[0] }}</td>
+    <td>{{ r[1] }} </td>
+    <td>{{ r[2] }}</td>
+    <td>{{ r[3] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No hay reseñas para este lugar.</p>
+{% endif %}
+
+</body>
+</html>

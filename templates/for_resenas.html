@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reseñas</title>
+</head>
+<body>
+
+<h2>Reseñas</h2>
+
+<table border = "1" cellpadding = "8">
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Dirección</th>
+    <th>Promedio</th>
+    <th>Reseñar</th>
+    <th>Ver reseñas</th>
+  </tr>
+
+  {% for l in lugares %}
+  <tr>
+    <td>{{ l[0] }}</td>
+    <td>{{ l[1] }}</td>
+    <td>{{ l[2] }}</td>
+
+    <td>
+      {% set p = promedios.get(l[0]) %}
+      {{ p[0] if p and p[0] is not none else "Sin reseñas" }}
+    </td>
+
+    <td><a href = "/resena/{{ l[0] }}">Reseña</a></td>
+    <td><a href = "/resenas/{{ l[0] }}">Ver reseñas</a></td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>

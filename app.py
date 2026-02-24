@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-import db_funciones  # Tesista 2 Completo
+import db_funciones # Tesista 2 Completo
+import reviews 
 
 app = Flask(__name__)
 app.secret_key = 'secreto_coordinador_baruch'
@@ -32,6 +33,8 @@ def test_promedio(id):
 def test_top():
     top = db_funciones.obtener_lugares_mejor_calificados()
     return jsonify({"mejores_lugares": top})
+
+reviews.rutas(app)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
