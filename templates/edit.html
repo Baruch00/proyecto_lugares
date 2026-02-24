@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Editar lugar</title>
+</head>
+<body>
+  <h2>Editar lugar</h2>
+
+  <p><b>ID:</b> {{ lugar[0] }}</p>
+
+  <form method="POST">
+    <label>Nombre *</label><br>
+    <input type="text" name="nombre" value="{{ lugar[1] }}" required><br><br>
+
+    <label>Dirección *</label><br>
+    <input type="text" name="direccion" value="{{ lugar[2] }}" required><br><br>
+
+    <label>Mapa URL</label><br>
+    <input type="text" name="mapa" value="{{ lugar[3] if lugar[3] else '' }}"><br><br>
+
+    <label>Descripción</label><br>
+    <textarea name="descripcion" rows="4" cols="40">{{ lugar[4] if lugar[4] else '' }}</textarea><br><br>
+
+    <button type="submit">Guardar cambios</button>
+  </form>
+
+  <br>
+  <a href="/">⬅️ Volver</a>
+</body>
+</html>

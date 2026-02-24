@@ -58,11 +58,24 @@ def insertar_lugar(id, nombre, direccion, mapa, descripcion, usuario_id):
 
 
 
-def actualizar_lugar(id, nuevo_nombre):
+def actualizar_lugar(id, nombre, direccion, mapa_url, descripcion):
     con = duckdb.connect(DB_PATH)
+
+    mapa_val = None if (mapa_url is None or str(mapa_url).strip() == "") else str(mapa_url).strip()
+    desc_val = None if (descripcion is None or str(descripcion).strip() == "") else str(descripcion).strip()
+
     con.execute(
-        f"UPDATE lugar SET lugar_nombre = '{nuevo_nombre}' WHERE lugar_id = {id}"
+        """
+        UPDATE lugar
+        SET lugar_nombre = ?,
+            lugar_direccion = ?,
+            lugar_mapa_url = ?,
+            lugar_descripcion = ?
+        WHERE lugar_id = ?
+        """,
+        [str(nombre).strip(), str(direccion).strip(), mapa_val, desc_val, id]
     )
+
     con.close()
 
 

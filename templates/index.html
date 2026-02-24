@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Administración de lugares</title>
+</head>
+<body>
+  <h2>Administración de lugares</h2>
+  <a href="/add">➕ Agregar lugar</a>
+
+  <table border="1" cellpadding="6" cellspacing="0" style="margin-top:10px;">
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Mapa URL</th>
+      <th>Descripción</th>
+      <th>Usuario ID</th>
+      <th>Fecha registro</th>
+      <th>Acciones</th>
+    </tr>
+
+    {% for l in lugares %}
+    <tr>
+      <!-- Estructura de lugar según tu CREATE TABLE:
+           lugar_id(0), lugar_nombre(1), lugar_direccion(2), lugar_mapa_url(3),
+           lugar_descripcion(4), lugar_usuario_id(5), lugar_fecha_registro(6)
+      -->
+      <td>{{ l[0] }}</td>
+      <td>{{ l[1] }}</td>
+      <td>{{ l[2] }}</td>
+      <td>{{ l[3] }}</td>
+      <td>{{ l[4] }}</td>
+      <td>{{ l[5] }}</td>
+      <td>{{ l[6] }}</td>
+      <td>
+        <a href="/edit/{{ l[0] }}">✏️ Editar nombre</a>
+
+        <form method="POST" action="/delete/{{ l[0] }}" style="display:inline;"
+              onsubmit="return confirm('Esto eliminará el lugar (DELETE). ¿Continuar?');">
+          <button type="submit">🗑️ Eliminar</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Agregar lugar</title>
+</head>
+<body>
+  <h2>Agregar lugar</h2>
+
+  <form method="POST">
+    <label>ID del lugar *</label><br>
+    <input type="number" name="lugar_id" required><br><br>
+
+    <label>Nombre *</label><br>
+    <input type="text" name="nombre" required><br><br>
+
+    <label>Dirección *</label><br>
+    <input type="text" name="direccion" required><br><br>
+
+    <label>Mapa URL</label><br>
+    <input type="text" name="mapa"><br><br>
+
+    <label>Descripción</label><br>
+    <textarea name="descripcion" rows="4" cols="40"></textarea><br><br>
+
+    <label>Usuario ID *</label><br>
+    <input type="number" name="usuario_id" required><br><br>
+
+    <button type="submit">Guardar</button>
+  </form>
+
+  <br>
+  <a href="/">⬅️ Volver</a>
+</body>
+</html>
