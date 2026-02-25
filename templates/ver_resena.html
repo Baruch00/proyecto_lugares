@@ -1,38 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Ver reseñas</title>
+  <meta charset="UTF-8">
+  <title>Reseñas del lugar {{ lugar_id }}</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/public.css') }}">
 </head>
-<body>
+<body class="public-page">
 
-<h2>Reseñas de {{ lugar_id }}</h2>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <p class="site-subtitle">Proyecto Lugares · Vista pública</p>
+        <h1 class="site-title">Reseñas del lugar {{ lugar_id }}</h1>
+        <p class="site-lead">
+          Aquí se muestran las reseñas que el público ha dejado para este lugar.
+        </p>
+      </div>
 
-<p><b>Promedio de calificacion:</b> {{ promedio if promedio is not none else "Sin reseñas" }} </p>
+      <nav class="site-nav">
+        <a href="{{ url_for('index') }}" class="nav-link">Volver a lugares</a>
+      </nav>
+    </div>
+  </header>
 
-<a href="/resenas">Volver a inicio</a>
-<hr>
+  <main class="public-main">
 
-{% if resenas and resenas|length > 0 %}
-<table border = "1" cellpadding = "8">
-  <tr>
-    <th>Usuario ID</th>
-    <th>Estrellas</th>
-    <th>Comentario</th>
-    <th>Fecha</th>
-  </tr>
+    <!-- RESUMEN -->
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-card">
+          <div class="hero-content">
+            <div class="hero-text">
+              <h2>Resumen de reseñas</h2>
+              <p>
+                <strong>Promedio de calificación:</strong>
+                {{ promedio if promedio is not none else "Sin reseñas" }}
+              </p>
 
-  {% for r in resenas %}
-  <tr>
-    <td>{{ r[0] }}</td>
-    <td>{{ r[1] }} </td>
-    <td>{{ r[2] }}</td>
-    <td>{{ r[3] }}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-<p>No hay reseñas para este lugar.</p>
-{% endif %}
+              <div class="hero-actions">
+                <a href="/resena/{{ lugar_id }}" class="btn btn-primary">
+                   Escribir una reseña
+                </a>
+                <a href="{{ url_for('index') }}" class="btn btn-outline">
+                   Volver a la lista de lugares
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LISTA DE RESEÑAS -->
+    <section class="list-section">
+      <div class="container">
+
+        <div class="section-header">
+          <h2>Reseñas del lugar {{ lugar_id }}</h2>
+          <p>Comentarios y calificaciones dejados por los usuarios.</p>
+        </div>
+
+        {% if resenas and resenas|length > 0 %}
+        <div class="reviews-list">
+          {% for r in resenas %}
+            {# suponiendo: r[0]=usuario_id, r[1]=estrellas, r[2]=comentario, r[3]=fecha #}
+            <article class="review-card">
+              <header class="review-header">
+                <div class="review-user">
+                  Usuario ID {{ r[0] }}
+                </div>
+                <div class="review-stars">
+                  {{ r[1] }} ★
+                </div>
+              </header>
+
+              <p class="review-comment">
+                {{ r[2] }}
+              </p>
+
+              <p class="review-date">
+                {{ r[3] }}
+              </p>
+            </article>
+          {% endfor %}
+        </div>
+        {% else %}
+          <div class="empty-block">
+            <h3>Aún no hay reseñas</h3>
+            <p>Sé la primera persona en compartir tu experiencia en este lugar.</p>
+          </div>
+        {% endif %}
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Proyecto Lugares · Reseñas</p>
+    </div>
+  </footer>
 
 </body>
 </html>

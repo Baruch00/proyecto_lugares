@@ -1,24 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
   <title>Escribir reseña</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/public.css') }}">
 </head>
-<body>
+<body class="public-page">
 
-<h2>Reseña del lugar {{ lugar_id }}</h2>
 
-<form method = "POST" action = "/lugares/{{ lugar_id }}/resena">
-  <label>Calificación (1 a 5)</label><br>
-  <input type = "number" name = "calificacion" min = "1" max = "5" required><br><br>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <p class="site-subtitle">Proyecto Lugares · Reseñas</p>
+        <h1 class="site-title">Escribir reseña</h1>
+        <p class="site-lead">
+          Cuéntanos tu experiencia sobre este lugar (ID {{ lugar_id }}).
+        </p>
+      </div>
 
-  <label>Comentario (mínimo 10 caracteres)</label><br>
-  <textarea name = "comentario" rows = "4" cols = "40" required></textarea><br><br>
+      <nav class="site-nav">
+        <a href="/resenas/{{ lugar_id }}" class="nav-link">Ver reseñas del lugar</a>
+        <a href="{{ url_for('index') }}" class="nav-link nav-link-outline">Volver a lugares</a>
+      </nav>
+    </div>
+  </header>
 
-  <button type = "submit">Guardar reseña</button>
-</form>
+  <main class="public-main">
 
-<br>
-<a href = "/resenas">Volver a inicio</a>
+    <!-- TARJETA CON EL FORMULARIO -->
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-card">
+          <div class="hero-content">
+            <div class="hero-text">
+
+              <h2>Deja tu reseña</h2>
+              <p>
+                La calificación va de <strong>1 a 5 estrellas</strong>.
+                El comentario debe tener al menos <strong>10 caracteres</strong>.
+              </p>
+
+              <form
+                method="POST"
+                action="/lugares/{{ lugar_id }}/resena"
+                class="review-form">
+
+                <div class="form-group">
+                  <label for="calificacion">Calificación (1 a 5)</label>
+                  <input
+                    id="calificacion"
+                    name="calificacion"
+                    type="number"
+                    min="1"
+                    max="5"
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label for="comentario">Comentario</label>
+                  <textarea
+                    id="comentario"
+                    name="comentario"
+                    rows="4"
+                    minlength="10"
+                    required></textarea>
+                </div>
+
+                <div class="form-footer">
+                  <button type="submit" class="btn btn-primary">
+                    Guardar reseña
+                  </button>
+
+                  <a href="/resenas/{{ lugar_id }}" class="btn btn-outline">
+                    Cancelar
+                  </a>
+                </div>
+
+              </form>
+
+            </div> 
+          </div> 
+        </div> 
+      </div> 
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Proyecto Lugares · Reseñas</p>
+    </div>
+  </footer>
 
 </body>
 </html>

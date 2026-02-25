@@ -413,4 +413,54 @@
     border-right: none;
     border-bottom: 1px solid var(--border);
   }
+  
+}
+
+/* ===== Reseñas (detalle de lugar) ===== */
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.review-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e6f0;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.review-user {
+  font-weight: 600;
+  color: #111827;
+  font-size: 0.95rem;
+}
+
+.review-stars {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #f59e0b; /* dorado suave para las estrellas */
+}
+
+.review-comment {
+  margin: 4px 0 6px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.review-date {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #6b7280;
 }

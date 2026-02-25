@@ -14,7 +14,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <div>
-        <p class="site-subtitle">Proyecto Lugares · Equipo de tesis</p>
+        <p class="site-subtitle">Proyecto Lugares · Fieros Programadores</p>
         <h1 class="site-title">Lugares interesantes</h1>
         <p class="site-lead">Explora sitios recomendados y abre el mapa al instante.</p>
       </div>
@@ -33,24 +33,21 @@
       <div class="container hero-wrap">
         <div class="hero-card">
           <div class="hero-content">
+
+            <!-- lado izquierdo -->
             <div class="hero-text">
               <h2>Encuentra lugares con buena referencia</h2>
               <p>
-                Esta es la vista pública. Aquí se listan lugares con su dirección, descripción y acceso al mapa.
-                Más adelante se integran reseñas y calificaciones.
+                Aquí se listan lugares con su dirección,
+                descripción y acceso al mapa. En "Ver mas detalle" puedes ver reseñas y
+                calificaciones.
               </p>
 
               <div class="hero-actions">
                 <a href="#explorar" class="btn btn-primary">Explorar lugares</a>
                 <a href="/login" class="btn btn-outline">Soy administrador</a>
               </div>
-
-              <div class="hero-badges">
-                <span class="badge">Público</span>
-                <span class="badge">Mapa</span>
-                <span class="badge">Reseñas (próximamente)</span>
-              </div>
-            </div>
+            </div> <!-- /hero-text -->
 
             <div class="hero-side">
               <div class="kpi">
@@ -67,13 +64,14 @@
                   Esta portada solo muestra información pública.
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </div> 
+
+          </div> 
+        </div> 
+      </div> 
     </section>
 
-    <!-- ===== BARRA DE BUSQUEDA / FILTRO (solo UI por ahora) ===== -->
+    <!-- ===== BARRA DE BUSQUEDA / FILTRO (no se si realmente la vamos a ocupar) ===== -->
     <section class="search-section" id="explorar">
       <div class="container">
         <div class="search-card">
@@ -96,7 +94,7 @@
       </div>
     </section>
 
-    <!-- ===== LISTADO TIPO TRIPADVISOR (cards) ===== -->
+    <!-- ===== LISTADO DE LUGARES INTERESANTES== -->
     <section class="list-section">
       <div class="container">
 
@@ -128,14 +126,22 @@
 
                   <div class="place-actions">
                     {% if lugar[3] %}
-                      <a class="btn btn-outline btn-small" href="{{ lugar[3] }}" target="_blank">Ver mapa</a>
+                      <a class="btn btn-outline btn-small"
+                         href="{{ lugar[3] }}"
+                         target="_blank">
+                        Ver mapa
+                      </a>
                     {% else %}
                       <span class="muted">Sin mapa</span>
                     {% endif %}
 
-                    <a class="btn btn-primary btn-small" href="#" title="próximamente">Ver detalle</a>
-                  </div>
-                </div>
+                    <!-- aquí va al detalle (reseñas) del lugar específico -->
+                    <a class="btn btn-primary btn-small"
+                       href="/resenas/{{ lugar[0] }}">
+                      Ver detalle
+                    </a>
+                  </div> 
+                </div> 
               </article>
             {% endfor %}
           {% else %}
