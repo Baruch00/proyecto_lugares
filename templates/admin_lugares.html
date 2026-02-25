@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de administración de lugares</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body class="admin-page">
+
+<div class="admin-container">
+
+    <!-- Encabezado institucional -->
+    <header class="admin-header">
+        <div>
+            <p class="admin-subtitle">Proyecto Lugares – Equipo de tesis</p>
+            <h1 class="admin-title">Panel de administración de lugares</h1>
+        </div>
+
+        <nav class="admin-nav">
+            <a href="/" class="link-quiet">← Volver al inicio</a>
+        </nav>
+    </header>
+
+    <!-- Tarjeta principal -->
+    <section class="admin-card">
+
+        <div class="admin-card-header">
+            <h2>Administración de lugares</h2>
+            <a href="/add" class="btn-primary">➕ Agregar lugar</a>
+        </div>
+
+        <div class="admin-card-body">
+
+            <div class="table-wrapper">
+
+                <table class="table-admin">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Mapa URL</th>
+                            <th>Descripción</th>
+                            <th>Usuario ID</th>
+                            <th>Fecha registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for l in lugares %}
+                        <tr>
+                            <!-- 0: id -->
+                            <td>{{ l[0] }}</td>
+
+                            <!-- 1: nombre -->
+                            <td>{{ l[1] }}</td>
+
+                            <!-- 2: dirección -->
+                            <td>{{ l[2] }}</td>
+
+                            <!-- 3: mapa -->
+                            <td>
+                                {% if l[3] %}
+                                    <a href="{{ l[3] }}" target="_blank" class="map-link">
+                                        Ver mapa
+                                    </a>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+
+                            <!-- 4: descripción -->
+                            <td>{{ l[4] }}</td>
+
+                            <!-- 5: usuario id -->
+                            <td>{{ l[5] }}</td>
+
+                            <!-- 6: fecha registro -->
+                            <td>{{ l[6] }}</td>
+
+                            <!-- acciones -->
+                            <td class="actions">
+                                <a class="btn-link" href="/edit/{{ l[0] }}">
+                                    ✏️ Editar
+                                </a>
+
+                                <form method="POST"
+                                      action="/delete/{{ l[0] }}"
+                                      style="display:inline;"
+                                      onsubmit="return confirm('¿Eliminar este lugar?');">
+                                    <button class="btn-delete" type="submit">
+                                        🗑️ Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>

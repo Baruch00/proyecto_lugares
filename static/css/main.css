@@ -1,0 +1,107 @@
+/* =========================================================
+   main.css (estilos globales del sitio)
+   - no está amarrado a una sola página
+   - sirve para que todo se vea consistente
+========================================================= */
+
+:root{
+  --bg: #f3f4f6;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #d1d5db;
+
+  --primary: #1e3a8a;      /* azul institucional */
+  --primary-2: #0f172a;    /* navy oscuro */
+
+  --card: #ffffff;
+  --header: #111827;
+
+  --danger: #b91c1c;
+  --danger-hover: #dc2626;
+
+  --shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+*{
+  box-sizing: border-box;
+}
+
+html, body{
+  height: 100%;
+}
+
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+}
+
+/* tipografía base */
+h1,h2,h3{
+  margin: 0 0 10px 0;
+  font-weight: 700;
+}
+
+p{
+  margin: 0 0 10px 0;
+  color: var(--text);
+}
+
+/* links */
+a{
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+/* contenedor utilitario */
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* tarjetas */
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+/* botones genéricos */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary{
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover{
+  filter: brightness(1.05);
+}
+
+.btn-outline{
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-outline:hover{
+  background: #f9fafb;
+}

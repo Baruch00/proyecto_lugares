@@ -1,0 +1,260 @@
+/* =========================================================
+   admin.css (solo panel administrativo)
+   - pensado para admin_lugares.html
+   - no afecta la parte pública
+========================================================= */
+
+.admin-page{
+  background: var(--bg);
+}
+
+/* contenedor principal */
+.admin-container{
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 18px 40px;
+}
+
+/* ===== header institucional ===== */
+.admin-header{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 18px 18px 16px;
+  margin-bottom: 18px;
+}
+
+.admin-subtitle{
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+.admin-title{
+  margin: 6px 0 0;
+  font-size: 28px;
+  color: var(--primary-2);
+}
+
+/* navegación / acciones superiores */
+.admin-nav{
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.link-quiet{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.link-quiet:hover{
+  background: #fff;
+  text-decoration: none;
+}
+
+/* ===== zona de contenido ===== */
+.admin-content{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+/* encabezado dentro de la tarjeta */
+.admin-section-title{
+  font-size: 18px;
+  margin: 0 0 10px 0;
+  color: var(--primary-2);
+}
+
+/* botón de agregar */
+.admin-actions{
+  margin: 10px 0 14px;
+}
+
+.admin-actions a{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: rgba(30,58,138,0.08);
+  border: 1px solid rgba(30,58,138,0.20);
+  font-weight: 700;
+}
+
+.admin-actions a:hover{
+  background: rgba(30,58,138,0.12);
+  text-decoration: none;
+}
+
+/* ===== tabla ===== */
+.table-wrapper{
+  width: 100%;
+  overflow-x: auto;           /* scroll horizontal cuando sea necesario */
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+/* importante: evita que se “encojan” columnas a lo loco */
+.table-admin{
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  min-width: 980px;           /* fuerza un mínimo decente, evita tabla “aplastada” */
+}
+
+.table-admin th,
+.table-admin td{
+  border-bottom: 1px solid var(--border);
+  padding: 10px 10px;
+  font-size: 14px;
+  vertical-align: top;
+}
+
+/* encabezados */
+.table-admin th{
+  background: #f3f4f6;
+  color: #111827;
+  text-align: left;
+  font-weight: 800;
+  position: sticky;
+  top: 0;                     /* si hay scroll vertical, encabezado queda pegado */
+  z-index: 1;
+}
+
+/* zebra */
+.table-admin tbody tr:nth-child(even){
+  background: #fafafa;
+}
+
+.table-admin tbody tr:hover{
+  background: #f1f5f9;
+}
+
+/* columnas (ajustables) */
+.table-admin th:nth-child(1),
+.table-admin td:nth-child(1){
+  width: 70px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.table-admin th:nth-child(2),
+.table-admin td:nth-child(2){
+  width: 220px;
+  font-weight: 650;
+}
+
+.table-admin th:nth-child(3),
+.table-admin td:nth-child(3){
+  width: 340px;
+}
+
+.table-admin th:nth-child(4),
+.table-admin td:nth-child(4){
+  width: 220px;
+}
+
+.table-admin th:nth-child(5),
+.table-admin td:nth-child(5){
+  width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.table-admin th:nth-child(6),
+.table-admin td:nth-child(6){
+  width: 170px;
+  white-space: nowrap;
+}
+
+.table-admin th:nth-child(7),
+.table-admin td:nth-child(7){
+  width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.table-admin th:nth-child(8),
+.table-admin td:nth-child(8){
+  width: 180px;
+  white-space: nowrap;
+}
+
+/* “ver mapa” */
+.map-link{
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(30,58,138,0.18);
+  background: rgba(30,58,138,0.07);
+  font-weight: 700;
+}
+
+.map-link:hover{
+  background: rgba(30,58,138,0.12);
+  text-decoration: none;
+}
+
+/* acciones */
+.actions{
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-link{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.btn-link:hover{
+  background: #f9fafb;
+  text-decoration: none;
+}
+
+.btn-delete{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(185,28,28,0.25);
+  background: rgba(185,28,28,0.08);
+  color: var(--danger);
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-delete:hover{
+  background: rgba(220,38,38,0.12);
+  border-color: rgba(220,38,38,0.28);
+}
+
+/* footer opcional */
+.admin-footer{
+  margin-top: 14px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+}
