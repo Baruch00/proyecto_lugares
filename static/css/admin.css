@@ -258,3 +258,21 @@
   color: var(--muted);
   font-size: 12px;
 }
+
+/* --- tamaño de inputs y textarea en formularios de admin --- */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="url"],
+.form-group textarea {
+    width: 100%;
+    max-width: 420px;   /* tamaño más grande del campo */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+    margin-top: 4px;
+}
+
+.form-textarea textarea {
+    min-height: 120px;  /* más alto */
+}

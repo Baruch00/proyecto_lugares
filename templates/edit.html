@@ -1,31 +1,81 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <title>Editar lugar</title>
+
+  <!-- Estilos del proyecto -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
-<body>
-  <h2>Editar lugar</h2>
 
-  <p><b>ID:</b> {{ lugar[0] }}</p>
+<body class="admin-page">
 
-  <form method="POST">
-    <label>Nombre *</label><br>
-    <input type="text" name="nombre" value="{{ lugar[1] }}" required><br><br>
+<div class="admin-container">
 
-    <label>Dirección *</label><br>
-    <input type="text" name="direccion" value="{{ lugar[2] }}" required><br><br>
+  <!-- ENCABEZADO -->
+  <header class="admin-header">
+    <div>
+      <p class="admin-subtitle">Proyecto Lugares – Equipo de tesis</p>
+      <h1 class="admin-title">Editar lugar</h1>
+      <p class="admin-text">Modifica la información registrada para este lugar.</p>
+    </div>
 
-    <label>Mapa URL</label><br>
-    <input type="text" name="mapa" value="{{ lugar[3] if lugar[3] else '' }}"><br><br>
+    <nav class="admin-nav">
+      <a href="/admin_lugares" class="link-quiet">← Volver al panel</a>
+    </nav>
+  </header>
 
-    <label>Descripción</label><br>
-    <textarea name="descripcion" rows="4" cols="40">{{ lugar[4] if lugar[4] else '' }}</textarea><br><br>
+  <!-- TARJETA -->
+  <section class="admin-card">
 
-    <button type="submit">Guardar cambios</button>
-  </form>
+    <div class="admin-card-header">
+      <h2>Datos del lugar</h2>
+      <span class="badge">ID: {{ lugar[0] }}</span>
+    </div>
 
-  <br>
-  <a href="/">⬅️ Volver</a>
+    <div class="admin-card-body">
+
+      <form method="POST" class="form-grid">
+
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" value="{{ lugar[1] }}" required>
+        </div>
+
+        <!-- Dirección -->
+        <div class="form-group">
+          <label for="direccion">Dirección</label>
+          <input type="text" id="direccion" name="direccion" value="{{ lugar[2] }}" required>
+        </div>
+
+        <!-- Mapa URL -->
+        <div class="form-group">
+          <label for="mapa">Mapa URL</label>
+          <input type="text" id="mapa" name="mapa" value="{{ lugar[3] if lugar[3] else '' }}">
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group form-textarea">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" name="descripcion" rows="4">{{ lugar[4] if lugar[4] else '' }}</textarea>
+        </div>
+
+        <!-- BOTÓN -->
+        <div class="form-footer">
+          <button type="submit" class="btn-primary btn-full">
+            Guardar cambios
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</div>
+
 </body>
 </html>
