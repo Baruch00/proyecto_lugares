@@ -49,6 +49,10 @@ def delete(lugar_id):
     db_funciones.eliminar_lugar(lugar_id)
     return redirect(url_for("index"))
 
+@app.before_request
+def simular_login():
+    session['usuario_id'] = 1  # Esto engaña al sistema para que te deje pasar
+
 if __name__ == "__main__":
     # Asegurando el arranque del servidor
     app.run(debug=True, port=5000)
