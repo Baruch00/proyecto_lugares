@@ -18,7 +18,7 @@ def login():
             session["usuario_id"]     = usuario[0]
             session["usuario_nombre"] = usuario[3]
             flash(f"Bienvenido {usuario[3]}")
-            return redirect(url_for("index"))
+            return redirect(url_for("admin_lugares"))
         else:
             flash("Correo o contraseña incorrectos.")
             return redirect(url_for("auth.login"))

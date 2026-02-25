@@ -1,28 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
+  <meta charset="UTF-8">
+  <title>Acceso administrador</title>
+
+  <!-- estilos globales -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <!-- estilos específicos del login -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
-<body>
-    <h2>Acceso Administrativo</h2>
+<body class="login-page">
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for msg in messages %}
-                <p style="color:red;">{{ msg }}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+  <div class="login-wrapper">
+    <div class="login-card">
 
-    <form method="POST">
-        <label>Correo:</label><br>
-        <input type="email" name="correo" required><br><br>
+      <header class="login-header">
+        <p class="login-subtitle">Proyecto Lugares · Acceso restringido</p>
+        <h1 class="login-title">Iniciar sesión</h1>
+        <p class="login-text">
+          Esta sección es solo para administradores que dan de alta y administran lugares.
+        </p>
+      </header>
 
-        <label>Contraseña:</label><br>
-        <input type="password" name="password" required><br><br>
+      {# Bloque para mostrar mensajes de error si el backend los manda #}
+      {% if error %}
+      <div class="login-alert">
+        {{ error }}
+      </div>
+      {% endif %}
 
-        <button type="submit">Entrar</button>
-    </form>
+      <form class="login-form" method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+          <label for="username">Correo electrónico</label>
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            placeholder="Ingresa tu correo"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Ingresa tu contraseña"
+            required>
+        </div>
+
+        <div class="form-footer">
+          <button type="submit" class="btn btn-primary btn-full">
+            Ingresar
+          </button>
+        </div>
+      </form>
+
+      <footer class="login-footer">
+        <a href="/" class="link-quiet-small">← Volver a la página principal</a>
+      </footer>
+
+    </div>
+  </div>
+
 </body>
 </html>

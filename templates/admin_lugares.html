@@ -13,14 +13,19 @@
 
     <!-- Encabezado institucional -->
     <header class="admin-header">
-        <div>
-            <p class="admin-subtitle">Proyecto Lugares – Equipo de tesis</p>
+        <div class="admin-header-left">
+            <p class="admin-subtitle">Proyecto Lugares – Administración</p>
             <h1 class="admin-title">Panel de administración de lugares</h1>
         </div>
 
-        <nav class="admin-nav">
-            <a href="/" class="link-quiet">← Volver al inicio</a>
-        </nav>
+        <div class="admin-header-right">
+            {% if usuario_nombre %}
+                <span class="admin-welcome">Bienvenido, {{ usuario_nombre }}</span>
+                <a href="{{ url_for('logout') }}" class="admin-logout">Cerrar sesión</a>
+            {% else %}
+                <a href="{{ url_for('index') }}" class="link-quiet">← Volver al inicio</a>
+            {% endif %}
+        </div>
     </header>
 
     <!-- Tarjeta principal -->
@@ -28,7 +33,7 @@
 
         <div class="admin-card-header">
             <h2>Administración de lugares</h2>
-            <a href="/add" class="btn-primary">➕ Agregar lugar</a>
+            <a href="{{ url_for('add') }}" class="btn-primary">➕ Agregar lugar</a>
         </div>
 
         <div class="admin-card-body">
@@ -83,12 +88,12 @@
 
                             <!-- acciones -->
                             <td class="actions">
-                                <a class="btn-link" href="/edit/{{ l[0] }}">
+                                <a class="btn-link" href="{{ url_for('edit', lugar_id=l[0]) }}">
                                     ✏️ Editar
                                 </a>
 
                                 <form method="POST"
-                                      action="/delete/{{ l[0] }}"
+                                      action="{{ url_for('delete', lugar_id=l[0]) }}"
                                       style="display:inline;"
                                       onsubmit="return confirm('¿Eliminar este lugar?');">
                                     <button class="btn-delete" type="submit">

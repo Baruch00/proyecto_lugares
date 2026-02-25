@@ -10,22 +10,64 @@ app.register_blueprint(auth)
 # --- INTEGRACIÓN DE MÓDULOS ---
 reviews.rutas(app)
 
+
+
 # --- VISTA PÚBLICA (Página de inicio "Chida") ---
 @app.route("/")
 def index():
-    # Esta es la vista estilo TripAdvisor para los visitantes
+    # Esta es la vista para los visitantes
     datos_lugares = db_funciones.obtener_lugares()
-    return render_template("index.html", lugares=datos_lugares)
+    return render_template("index_chido.html", lugares=datos_lugares)
+
+
+
+# --- LOGIN ADMINISTRADOR ---
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # en el form el campo se llama "usuario", pero en realidad es el correo
+        correo = request.form.get("usuario")
+        password = request.form.get("password")
+
+        # buscamos al usuario por correo en la BD
+        usuario = db_funciones.obtener_usuario_por_correo(correo)
+
+        if usuario:
+            # orden según tu INSERT de usuario:
+            # (usuario_id, ap_pat, ap_mat, nombres, correo, contrasena)
+            contrasena_bd = usuario[5]
+
+            if str(contrasena_bd) == str(password):
+                # guardar info básica en sesión
+                session["usuario_id"] = usuario[0]
+                session["usuario_nombre"] = usuario[3]
+                session["usuario_correo"] = usuario[4]
+
+                return redirect(url_for("admin_lugares"))
+
+        # si algo falla, regresamos al login con error
+        return render_template("login.html", error="Usuario o contraseña incorrectos")
+
+    # si es GET, solo mostramos el formulario
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
+
 
 # --- PANEL ADMINISTRATIVO (Solo con Login) ---
-@app.route("/admin")
-def admin_panel():
-    if "usuario_id" not in session:
-        return redirect(url_for("auth.login"))
-    
-    # Esta es la nueva plantilla con la tabla de gestión
+@app.route("/admin_lugares")
+def admin_lugares():
     datos_lugares = db_funciones.obtener_lugares()
-    return render_template("admin_lugares.html", lugares=datos_lugares)
+    nombre = session.get("usuario_nombre")  # puede ser None si no hay login
+    return render_template("admin_lugares.html",lugares=datos_lugares,usuario_nombre=nombre)
+
+
+
+
 
 # --- MÓDULO DE LUGARES (CRUD) ---
 
