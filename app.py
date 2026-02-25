@@ -1,13 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session
 import db_funciones # Tesista 2
 import reviews      # Tesista 5
+from auth import auth
 
 app = Flask(__name__)
 app.secret_key = 'secreto_coordinador_baruch'
+app.register_blueprint(auth)
 
 # --- INTEGRACIÓN DE MÓDULOS ---
 # Activamos las rutas de reseñas del Tesista 5
 reviews.rutas(app)
+
 
 # --- RUTA PRINCIPAL (Tesista 6) ---
 @app.route("/")
@@ -18,6 +21,9 @@ def index():
 # --- MÓDULO DE LUGARES (Tesista 4) ---
 @app.route("/add", methods=["GET", "POST"])
 def add():
+    if "usuario_id" not in session:         
+        return redirect(url_for("auth.login"))
+    
     if request.method == "POST":
         id_l = int(request.form["lugar_id"])
         nom = request.form["nombre"].strip()
@@ -32,6 +38,9 @@ def add():
 
 @app.route("/edit/<int:lugar_id>", methods=["GET", "POST"])
 def edit(lugar_id):
+    if "usuario_id" not in session:         
+        return redirect(url_for("auth.login"))
+    
     if request.method == "POST":
         nom = request.form["nombre"].strip()
         dir = request.form["direccion"].strip()
@@ -46,12 +55,13 @@ def edit(lugar_id):
 
 @app.route("/delete/<int:lugar_id>", methods=["POST"])
 def delete(lugar_id):
+    if "usuario_id" not in session:         
+        return redirect(url_for("auth.login"))
+    
     db_funciones.eliminar_lugar(lugar_id)
     return redirect(url_for("index"))
 
-@app.before_request
-def simular_login():
-    session['usuario_id'] = 1  # Esto engaña al sistema para que te deje pasar
+
 
 if __name__ == "__main__":
     # Asegurando el arranque del servidor
