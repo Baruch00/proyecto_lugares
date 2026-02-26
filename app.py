@@ -11,17 +11,14 @@ app = Flask(__name__)
 app.secret_key = 'secreto_coordinador_baruch'
 app.register_blueprint(auth)
 
-# --- INTEGRACIÓN DE MÓDULOS ---
 reviews.rutas(app)
 stats.rutas(app)
 
-# --- VISTA PÚBLICA (Página de inicio "Chida") ---
 @app.route("/")
 def index():
     datos_lugares = db_funciones.obtener_lugares()
     return render_template("index_chido.html", lugares=datos_lugares)
 
-# --- LOGIN ADMINISTRADOR ---
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -47,14 +44,12 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
-# --- PANEL ADMINISTRATIVO (Solo con Login) ---
 @app.route("/admin_lugares")
 def admin_lugares():
     datos_lugares = db_funciones.obtener_lugares()
     nombre = session.get("usuario_nombre")
     return render_template("admin_lugares.html", lugares=datos_lugares, usuario_nombre=nombre)
 
-# --- MÓDULO DE LUGARES (CRUD) ---
 @app.route("/add", methods=["GET", "POST"])
 def add():
     if "usuario_id" not in session:
@@ -98,7 +93,6 @@ def delete(lugar_id):
     db_funciones.eliminar_lugar(lugar_id)
     return redirect(url_for("admin_lugares"))
 
-# ✅ Eliminar lugar + TODAS sus reseñas
 @app.route("/delete_full/<int:lugar_id>", methods=["POST"])
 def delete_full(lugar_id):
     if "usuario_id" not in session:
@@ -113,22 +107,15 @@ def delete_full(lugar_id):
 
     return redirect(url_for("admin_lugares"))
 
-# =========================================================
-# ✅ NUEVO: ADMINISTRAR RESEÑAS (VISTA ADMIN, NO PÚBLICA)
-# =========================================================
-
 @app.route("/admin_resenas/<int:lugar_id>")
 def admin_resenas(lugar_id):
-    # Solo con sesión
     if "usuario_id" not in session:
         return redirect(url_for("auth.login"))
 
-    # Traer el lugar (para mostrar nombre/título)
     lugar = db_funciones.obtener_lugar_por_id(lugar_id)
     if not lugar:
         return "Lugar no encontrado.", 404
 
-    # Traer reseñas del lugar (incluyendo resena_id para poder borrar)
     con = duckdb.connect(DB_PATH)
     try:
         resenas = con.execute("""
@@ -151,7 +138,6 @@ def admin_resenas(lugar_id):
 
 @app.route("/admin_resenas/<int:lugar_id>/delete/<int:resena_id>", methods=["POST"])
 def admin_delete_resena(lugar_id, resena_id):
-    # Solo con sesión
     if "usuario_id" not in session:
         return redirect(url_for("auth.login"))
 
@@ -164,4 +150,8 @@ def admin_delete_resena(lugar_id, resena_id):
     return redirect(url_for("admin_resenas", lugar_id=lugar_id))
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(debug=True, port=5000)
+=======
+    app.run(debug=True, host='0.0.0.0', port=5000)
+>>>>>>> ebafec8f95c9007b568b1179e4faf36b0c6ada90
