@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Estadísticas</h2>
+
+<div class="stats-grid">
+  <div class="card">
+    <div class="label">Lugares registrados</div>
+    <div class="value">{{ total_lugares }}</div>
+  </div>
+  <div class="card">
+    <div class="label">Reseñas registradas</div>
+    <div class="value">{{ total_resenas }}</div>
+  </div>
+  <div class="card">
+    <div class="label">Promedio de estrellas</div>
+    <div class="value">{{ promedio_estrellas }}</div>
+  </div>
+</div>
+
+<div class="card big">
+  <h3>Top 5 lugares (promedio de estrellas)</h3>
+  {% if top_labels|length == 0 %}
+    <p>Aún no hay reseñas para calcular el top.</p>
+  {% else %}
+    <canvas id="chartTop" height="110"></canvas>
+    <p class="note">Entre paréntesis se muestra cuántas reseñas tiene cada lugar.</p>
+  {% endif %}
+</div>
+
+<div class="card big">
+  <h3>Distribución de estrellas</h3>
+  {% if dist_labels|length == 0 %}
+    <p>Aún no hay reseñas para mostrar la distribución.</p>
+  {% else %}
+    <canvas id="chartDist" height="110"></canvas>
+  {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Datos desde Flask (Jinja)
+  const topLabels = {{ top_labels | tojson }};
+  const topValues = {{ top_values | tojson }};
+  const topCounts = {{ top_counts | tojson }};
+
+  const distLabels = {{ dist_labels | tojson }};
+  const distValues = {{ dist_values | tojson }};
+
+  // Top chart
+  if (topLabels.length > 0) {
+    const labelConConteo = topLabels.map((n, i) => `${n} (${topCounts[i]})`);
+    new Chart(document.getElementById("chartTop"), {
+      type: "bar",
+      data: {
+        labels: labelConConteo,
+        datasets: [{
+          label: "Promedio de estrellas",
+          data: topValues
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: true } },
+        scales: { y: { beginAtZero: true, suggestedMax: 5 } }
+      }
+    });
+  }
+
+  // Distribución chart
+  if (distLabels.length > 0) {
+    new Chart(document.getElementById("chartDist"), {
+      type: "bar",
+      data: {
+        labels: distLabels.map(s => `${s} ⭐`),
+        datasets: [{
+          label: "Cantidad de reseñas",
+          data: distValues
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: true } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+  }
+</script>
+
+<style>
+  .stats-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap:12px;
+    margin: 12px 0 18px;
+  }
+  .card{
+    background:#fff;
+    border:1px solid #e6e6e6;
+    border-radius:12px;
+    padding:14px 16px;
+    box-shadow:0 1px 6px rgba(0,0,0,.05);
+  }
+  .card.big{ margin-top: 14px; }
+  .label{ color:#555; font-size:14px; }
+  .value{ font-size:28px; font-weight:700; margin-top:6px; }
+  .note{ color:#666; font-size:13px; margin: 8px 0 0; }
+</style>
+
+{% endblock %}

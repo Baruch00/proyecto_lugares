@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import db_funciones  # Tesista 2
 import reviews       # Tesista 5
+import stats
 from auth import auth
 import duckdb
 
@@ -12,6 +13,7 @@ app.register_blueprint(auth)
 
 # --- INTEGRACIÓN DE MÓDULOS ---
 reviews.rutas(app)
+stats.rutas(app)
 
 # --- VISTA PÚBLICA (Página de inicio "Chida") ---
 @app.route("/")
