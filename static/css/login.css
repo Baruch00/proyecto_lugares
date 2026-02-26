@@ -1,128 +1,154 @@
 /* =========================================================
-   login.css – estilos para la vista de login
-   Usa variables y base de main.css
+   login.css – estilos para la vista de login (PRO)
+   - No modifica login.html
+   - Usa variables de main.css
 ========================================================= */
 
 .login-page{
-  background: var(--bg);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* fondo más elegante solo para login */
+  background:
+    radial-gradient(900px 520px at 20% 10%, rgba(6,182,212,0.18), transparent 60%),
+    radial-gradient(900px 520px at 85% 0%, rgba(37,99,235,0.16), transparent 58%),
+    var(--bg);
 }
 
 .login-wrapper{
   width: 100%;
-  max-width: 420px;
-  padding: 16px;
+  max-width: 430px;
+  padding: 18px;
 }
 
+/* tarjeta del login */
 .login-card{
-  background: var(--card);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  padding: 20px 20px 18px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  box-shadow: 0 18px 40px rgba(2,6,23,0.12);
+  padding: 22px 22px 18px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* brillo decorativo */
+.login-card::before{
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  top: -120px;
+  right: -120px;
+  background: radial-gradient(circle at 30% 30%, rgba(6,182,212,0.28), transparent 60%),
+              radial-gradient(circle at 70% 70%, rgba(37,99,235,0.22), transparent 62%);
+  transform: rotate(18deg);
+  pointer-events: none;
 }
 
 /* encabezado */
-
 .login-header{
-  margin-bottom: 16px;
-}
-
-.login-subtitle{
-  margin: 0 0 4px;
-  font-size: 13px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
 }
 
 .login-title{
   margin: 0 0 6px;
-  font-size: 24px;
+  font-size: 26px;
   color: var(--primary-2);
+  font-weight: 900;
+  text-align: left;
 }
 
-.login-text{
-  margin: 0;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-/* alerta de error (si la usan) */
-
+/* alerta de error */
 .login-alert{
   margin: 10px 0 12px;
-  padding: 8px 10px;
-  border-radius: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
   border: 1px solid rgba(185,28,28,0.25);
-  background: rgba(254, 226, 226, 0.9);
+  background: rgba(254, 226, 226, 0.95);
   color: var(--danger);
   font-size: 13px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
 }
 
 /* formulario */
-
 .login-form{
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 8px;
+  margin-top: 6px;
+  position: relative;
+  z-index: 1;
 }
 
 .form-group{
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .form-group label{
   font-size: 13px;
-  font-weight: 600;
-  color: var(--primary-2);
+  font-weight: 900;
+  color: var(--text);
 }
 
+/* inputs modernos */
 .form-group input{
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 9px 11px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 14px;
+  padding: 11px 12px;
   font-size: 14px;
   outline: none;
-  background: #fff;
+  background: rgba(255,255,255,0.95);
+  transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease;
+}
+
+.form-group input:hover{
+  border-color: rgba(37,99,235,0.22);
 }
 
 .form-group input:focus{
-  border-color: rgba(30,58,138,0.45);
-  box-shadow: 0 0 0 3px rgba(30,58,138,0.12);
+  border-color: rgba(6,182,212,0.55);
+  box-shadow: var(--focus);
+  transform: translateY(-1px);
 }
 
 /* botón */
-
 .form-footer{
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .btn-full{
   width: 100%;
-  border-radius: 12px;
-  padding: 10px 14px;
+  border-radius: 14px;
+  padding: 11px 14px;
+  font-weight: 900;
 }
 
 /* footer */
-
 .login-footer{
   margin-top: 14px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .link-quiet-small{
   font-size: 13px;
   color: var(--muted);
   text-decoration: none;
+  font-weight: 700;
 }
 
 .link-quiet-small:hover{
   text-decoration: underline;
+  color: var(--primary);
 }

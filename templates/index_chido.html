@@ -14,13 +14,11 @@
   <header class="site-header">
     <div class="container header-inner">
       <div>
-        <p class="site-subtitle">Proyecto Lugares · Fieros Programadores</p>
         <h1 class="site-title">Lugares interesantes</h1>
         <p class="site-lead">Explora sitios recomendados y abre el mapa al instante.</p>
       </div>
 
       <nav class="site-nav">
-        <a href="#explorar" class="nav-link">Explorar</a>
         <a href="/login" class="nav-link nav-link-outline">Acceso administrador</a>
       </nav>
     </div>
@@ -43,12 +41,6 @@
                 calificaciones.
               </p>
 
-              <div class="hero-actions">
-                <a href="#explorar" class="btn btn-primary">Explorar lugares</a>
-                <a href="/login" class="btn btn-outline">Soy administrador</a>
-              </div>
-            </div> <!-- /hero-text -->
-
             <div class="hero-side">
               <div class="kpi">
                 <p class="kpi-label">Lugares registrados</p>
@@ -57,51 +49,17 @@
                 </p>
               </div>
 
-              <div class="note">
-                <p class="note-title">Nota</p>
-                <p class="note-text">
-                  El acceso administrativo requiere autenticación.
-                  Esta portada solo muestra información pública.
-                </p>
-              </div>
-            </div> 
 
           </div> 
         </div> 
       </div> 
     </section>
 
-    <!-- ===== BARRA DE BUSQUEDA / FILTRO (no se si realmente la vamos a ocupar) ===== -->
-    <section class="search-section" id="explorar">
-      <div class="container">
-        <div class="search-card">
-          <div class="search-left">
-            <h3>Explorar lugares</h3>
-            <p>Filtra por nombre o colonia (solo interfaz por ahora).</p>
-          </div>
 
-          <div class="search-right">
-            <input class="search-input" type="text" placeholder="Buscar lugar... (ej. Chapultepec)">
-            <select class="search-select">
-              <option value="">Categoría (próximamente)</option>
-              <option>Museos</option>
-              <option>Parques</option>
-              <option>Monumentos</option>
-            </select>
-            <button class="btn btn-primary btn-search" type="button">Buscar</button>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- ===== LISTADO DE LUGARES INTERESANTES== -->
     <section class="list-section">
       <div class="container">
-
-        <div class="section-header">
-          <h2>Resultados</h2>
-          <p>Lista pública de lugares disponibles.</p>
-        </div>
 
         <div class="results-grid">
           {% if lugares %}

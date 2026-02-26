@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Administrar reseñas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body class="admin-page">
+<div class="admin-container">
+
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <h1 class="admin-title">Administrar reseñas</h1>
+      <p class="admin-subtitle">
+        Lugar: <strong>{{ lugar[1] }}</strong> (ID {{ lugar_id }})
+      </p>
+    </div>
+
+    <div class="admin-header-right">
+      {% if usuario_nombre %}
+        <span class="admin-welcome">Bienvenido, {{ usuario_nombre }}</span>
+      {% endif %}
+      <a href="{{ url_for('admin_lugares') }}" class="link-quiet">← Volver a lugares</a>
+    </div>
+  </header>
+
+  <section class="admin-card">
+    <div class="admin-card-header">
+      <h2>Reseñas del lugar</h2>
+    </div>
+
+    <div class="admin-card-body">
+      {% if resenas|length == 0 %}
+        <p>No hay reseñas para este lugar.</p>
+      {% else %}
+        <div class="table-wrapper">
+          <table class="table-admin">
+            <thead>
+              <tr>
+                <th>ID reseña</th>
+                <th>Usuario ID</th>
+                <th>Estrellas</th>
+                <th>Comentario</th>
+                <th>Fecha</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in resenas %}
+              <tr>
+                <td>{{ r[0] }}</td>
+                <td>{{ r[1] }}</td>
+                <td>{{ r[2] }}</td>
+                <td>{{ r[3] }}</td>
+                <td>{{ r[4] }}</td>
+                <td>
+                  <form method="POST"
+                        action="{{ url_for('admin_delete_resena', lugar_id=lugar_id, resena_id=r[0]) }}"
+                        onsubmit="return confirm('¿Eliminar esta reseña?');"
+                        style="display:inline;">
+                    <button type="submit" class="btn-delete">🗑️ Eliminar</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
