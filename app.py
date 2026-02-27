@@ -10,18 +10,16 @@ import duckdb
 
 import db_funciones      # Tesista 2
 import reviews           # Tesista 5
-import stats             # Tesista 7, supongo
-from auth import auth    # Blueprint de login/logout
+import stats             # Tesista 7
+from auth import auth    # Tesista 3
 
 DB_PATH = "lugares.db"
 
 app = Flask(__name__)
 app.secret_key = "secreto_coordinador_baruch"
 
-# Registramos blueprint de autenticación
 app.register_blueprint(auth)
 
-# Registramos rutas de reseñas y estadísticas
 reviews.rutas(app)
 stats.rutas(app)
 
@@ -172,5 +170,4 @@ def admin_delete_resena(lugar_id, resena_id):
 
 # -----------------------------------------------------------------------------    
 if __name__ == "__main__":
-    # Para correr localmente
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
