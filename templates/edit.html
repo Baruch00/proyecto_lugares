@@ -1,61 +1,82 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Editar lugar</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
+{% extends "base.html" %}
 
-<body class="admin-page">
-<div class="admin-container">
+{% block title %}Editar lugar{% endblock %}
+{% block header_title %}Editar lugar{% endblock %}
 
-  <header class="admin-header">
-    <div class="admin-header-left">
-      <h1 class="admin-title">Editar lugar</h1>
+{% block content %}
+
+<section class="admin-card form-card">
+
+  <header class="admin-card-header">
+    <div>
+      <h2>Editar lugar</h2>
+      <p class="admin-card-subtitle">
+        Modifica la información registrada para este lugar.
+      </p>
     </div>
-    <div class="admin-header-right">
-      <a href="{{ url_for('index') }}" class="link-quiet">← Volver</a>
-    </div>
+
+    <a href="/admin_lugares" class="btn-secondary">← Volver al panel</a>
   </header>
 
-  <section class="admin-card">
-    <div class="admin-card-header">
-      <h2>Editando lugar ID: {{ lugar[0] }}</h2>
-    </div>
+  <div class="admin-card-body">
 
-    <div class="admin-card-body">
-      <form method="POST" class="form-admin">
+    <p class="muted">
+      <strong>ID:</strong> {{ lugar[0] }}
+    </p>
 
-        <div class="form-group">
-          <label>Nombre *</label>
-          <input type="text" name="nombre" value="{{ lugar[1] }}" required>
-        </div>
+    <form method="POST">
 
-        <div class="form-group">
-          <label>Dirección *</label>
-          <input type="text" name="direccion" value="{{ lugar[2] }}" required>
-        </div>
+      <div class="form-group">
+        <label>Nombre *</label>
+        <input 
+          type="text" 
+          name="nombre" 
+          value="{{ lugar[1] }}" 
+          required
+        >
+      </div>
 
-        <div class="form-group">
-          <label>Mapa URL</label>
-          <input type="text" name="mapa" value="{{ lugar[3] if lugar[3] else '' }}">
-        </div>
+      <div class="form-group">
+        <label>Dirección *</label>
+        <input 
+          type="text" 
+          name="direccion" 
+          value="{{ lugar[2] }}" 
+          required
+        >
+      </div>
 
-        <div class="form-group">
-          <label>Descripción</label>
-          <textarea name="descripcion" rows="4">{{ lugar[4] if lugar[4] else '' }}</textarea>
-        </div>
+      <div class="form-group">
+        <label>Mapa URL</label>
+        <input 
+          type="text" 
+          name="mapa" 
+          value="{{ lugar[3] if lugar[3] else '' }}"
+        >
+      </div>
 
-        <div class="form-footer">
-          <button type="submit" class="btn-primary">Guardar cambios</button>
-          <a href="{{ url_for('index') }}" class="btn-secondary">Cancelar</a>
-        </div>
+      <div class="form-group">
+        <label>Descripción</label>
+        <textarea 
+          name="descripcion" 
+          rows="4"
+        >{{ lugar[4] if lugar[4] else '' }}</textarea>
+      </div>
 
-      </form>
-    </div>
-  </section>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          Guardar cambios
+        </button>
 
-</div>
-</body>
-</html>
+        <a href="{{ url_for('admin_lugares') }}" class="btn btn-outline">
+          Cancelar
+        </a>
+      </div>
+
+    </form>
+
+  </div>
+
+</section>
+
+{% endblock %}

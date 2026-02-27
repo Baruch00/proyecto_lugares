@@ -2,33 +2,31 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Reseñas del lugar {{ lugar_id }}</title>
+  <title>Reseñas del lugar {{ lugar_nombre }}</title>
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/public.css') }}">
 </head>
 <body class="public-page">
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="container header-inner">
       <div>
         <p class="site-subtitle">Proyecto Lugares · Vista pública</p>
-        <h1 class="site-title">Reseñas del lugar {{ lugar_id }}</h1>
+        <h1 class="site-title">Reseñas del lugar {{ lugar_nombre }}</h1>
         <p class="site-lead">
-          Aquí se muestran las reseñas que el público ha dejado para este lugar.
+          Aquí se muestran las reseñas de este lugar.
         </p>
       </div>
 
       <nav class="site-nav">
-        <a href="{{ url_for('index') }}" class="nav-link">Volver a lugares</a>
+        <a href="{{ url_for('index') }}" class="nav-link nav-link-outline">Volver a lugares</a>
       </nav>
     </div>
   </header>
 
   <main class="public-main">
 
-    <!-- RESUMEN -->
     <section class="hero">
       <div class="container hero-wrap">
         <div class="hero-card">
@@ -39,34 +37,23 @@
                 <strong>Promedio de calificación:</strong>
                 {{ promedio if promedio is not none else "Sin reseñas" }}
               </p>
-
-              <div class="hero-actions">
-                <a href="/resena/{{ lugar_id }}" class="btn btn-primary">
-                   Escribir una reseña
-                </a>
-                <a href="{{ url_for('index') }}" class="btn btn-outline">
-                   Volver a la lista de lugares
-                </a>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- LISTA DE RESEÑAS -->
     <section class="list-section">
       <div class="container">
 
         <div class="section-header">
-          <h2>Reseñas del lugar {{ lugar_id }}</h2>
+          <h2>Reseñas del lugar {{ lugar_nombre }}</h2>
           <p>Comentarios y calificaciones dejados por los usuarios.</p>
         </div>
 
         {% if resenas and resenas|length > 0 %}
         <div class="reviews-list">
           {% for r in resenas %}
-            {# suponiendo: r[0]=usuario_id, r[1]=estrellas, r[2]=comentario, r[3]=fecha #}
             <article class="review-card">
               <header class="review-header">
                 <div class="review-user">

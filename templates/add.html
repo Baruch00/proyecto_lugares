@@ -1,89 +1,100 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Agregar lugar</title>
+{% extends "base.html" %}
 
-  <!-- Estilos que ya teníamos -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
+{% block title %}Nuevo lugar{% endblock %}
+{% block header_title %}Nuevo lugar{% endblock %}
 
-<body class="admin-page">
+{% block content %}
 
-<div class="admin-container">
+<section class="admin-card form-card">
 
   <!-- ENCABEZADO -->
-  <header class="admin-header">
+  <header class="admin-card-header">
     <div>
-      <h1 class="admin-title">Agregar un nuevo lugar</h1>
-      <p class="admin-text">Completa la información para registrar un lugar en el sistema.</p>
+      <h2>Nuevo lugar</h2>
+      <p class="admin-card-subtitle">
+        Completa los datos obligatorios marcados con *.
+      </p>
     </div>
 
-    <nav class="admin-nav">
-      <a href="/admin_lugares" class="link-quiet">← Volver al panel</a>
-    </nav>
+    <a href="/admin_lugares" class="btn-secondary">← Volver al panel</a>
   </header>
 
-  <!-- TARJETA -->
-  <section class="admin-card">
+  <!-- FORMULARIO -->
+  <div class="admin-card-body">
 
-    <div class="admin-card-header">
-      <h2>Formulario de registro</h2>
-    </div>
+    <form method="POST">
 
-    <div class="admin-card-body">
+      <div class="form-group">
+        <label>ID del lugar *</label>
+        <input 
+          type="number" 
+          name="lugar_id" 
+          placeholder="Ej: 101"
+          required
+        >
+      </div>
 
-      <form method="POST" class="form-grid">
+      <div class="form-group">
+        <label>Nombre *</label>
+        <input 
+          type="text" 
+          name="nombre" 
+          placeholder="Ej: Museo Soumaya"
+          required
+        >
+      </div>
 
-        <!-- ID -->
-        <div class="form-group">
-          <label for="lugar_id">ID del lugar</label>
-          <input type="number" id="lugar_id" name="lugar_id" required>
-        </div>
+      <div class="form-group">
+        <label>Dirección *</label>
+        <input 
+          type="text" 
+          name="direccion" 
+          placeholder="Ej: Av. Ejército Nacional 123"
+          required
+        >
+      </div>
 
-        <!-- Nombre -->
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" required>
-        </div>
+      <div class="form-group">
+        <label>Mapa URL</label>
+        <input 
+          type="text" 
+          name="mapa" 
+          placeholder="https://maps.google.com/..."
+        >
+      </div>
 
-        <!-- Dirección -->
-        <div class="form-group">
-          <label for="direccion">Dirección</label>
-          <input type="text" id="direccion" name="direccion" required>
-        </div>
+      <div class="form-group">
+        <label>Descripción</label>
+        <textarea 
+          name="descripcion" 
+          rows="4"
+          placeholder="Descripción breve del lugar"
+        ></textarea>
+      </div>
 
-        <!-- Mapa URL -->
-        <div class="form-group">
-          <label for="mapa">Mapa URL</label>
-          <input type="text" id="mapa" name="mapa" placeholder="https://maps.google.com/...">
-        </div>
+      <div class="form-group">
+        <label>Usuario ID *</label>
+        <input 
+          type="number" 
+          name="usuario_id" 
+          placeholder="ID del administrador que registra"
+          required
+        >
+      </div>
 
-        <!-- Descripción -->
-        <div class="form-group form-textarea">
-          <label for="descripcion">Descripción</label>
-          <textarea id="descripcion" name="descripcion" rows="4"></textarea>
-        </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          Guardar lugar
+        </button>
 
-        <!-- Usuario -->
-        <div class="form-group">
-          <label for="usuario_id">Usuario ID</label>
-          <input type="number" id="usuario_id" name="usuario_id" required>
-        </div>
+        <a href="/admin_lugares" class="btn btn-outline">
+          Cancelar
+        </a>
+      </div>
 
-        <!-- BOTONES -->
-        <div class="form-footer">
-          <button type="submit" class="btn-primary btn-full">Guardar lugar</button>
-        </div>
+    </form>
 
-      </form>
+  </div>
+</section>
 
-    </div>
-
-  </section>
-
-</div>
-
-</body>
-</html>
+{% endblock %}

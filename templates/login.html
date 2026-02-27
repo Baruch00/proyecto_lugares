@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Acceso administrador</title>
 
-  <!-- estilos que ya teníamos -->
+  <!-- estilos globales -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-  <!-- estilos especiales para el login -->
+  <!-- estilos específicos del login -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body class="login-page">
@@ -15,19 +15,34 @@
     <div class="login-card">
 
       <header class="login-header">
+        <p class="login-subtitle">Proyecto Lugares · Acceso restringido</p>
         <h1 class="login-title">Iniciar sesión</h1>
+        <p class="login-text">
+          Esta sección es solo para administradores que dan de alta y administran lugares y reseñas.
+        </p>
       </header>
 
-      {# Bloque para mostrar mensajes de error si el backend los manda #}
+      {# mensajes enviados con flash() desde auth.py #}
+      {% with mensajes = get_flashed_messages() %}
+        {% if mensajes %}
+          <div class="login-alert">
+            {% for m in mensajes %}
+              <p>{{ m }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {# por si en algún momento mandan "error" directo al template #}
       {% if error %}
-      <div class="login-alert">
-        {{ error }}
-      </div>
+        <div class="login-alert">
+          {{ error }}
+        </div>
       {% endif %}
 
-      <form class="login-form" method="POST" action="{{ url_for('login') }}">
+      <form class="login-form" method="POST" action="{{ url_for('auth.login') }}">
         <div class="form-group">
-          <label for="username">Correo electrónico</label>
+          <label for="correo">Correo electrónico</label>
           <input
             type="email"
             id="correo"
@@ -54,7 +69,7 @@
       </form>
 
       <footer class="login-footer">
-        <a href="/" class="link-quiet-small">Volver a la página principal</a>
+        <a href="{{ url_for('index') }}" class="link-quiet-small">← Volver a la página principal</a>
       </footer>
 
     </div>

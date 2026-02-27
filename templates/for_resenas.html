@@ -1,38 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Reseñas</title>
+  <meta charset="utf-8">
+  <title>Lugares y reseñas</title>
+
+  <!-- estilos globales -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <!-- estilos públicos -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/public.css') }}">
 </head>
-<body>
 
-<h2>Reseñas</h2>
+<body class="public-page">
 
-<table border = "1" cellpadding = "8">
-  <tr>
-    <th>ID</th>
-    <th>Nombre</th>
-    <th>Dirección</th>
-    <th>Promedio</th>
-    <th>Reseñar</th>
-    <th>Ver reseñas</th>
-  </tr>
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <p class="site-subtitle">Proyecto Lugares · Vista pública</p>
+        <h1 class="site-title">Lugares y reseñas</h1>
+        <p class="site-lead">
+          Consulta el promedio de calificación de cada lugar, escribe nuevas reseñas
+          o revisa las opiniones existentes.
+        </p>
+      </div>
 
-  {% for l in lugares %}
-  <tr>
-    <td>{{ l[0] }}</td>
-    <td>{{ l[1] }}</td>
-    <td>{{ l[2] }}</td>
+      <nav class="site-nav">
+        <a href="{{ url_for('index') }}" class="nav-link">Inicio</a>
+        <a href="#lista" class="nav-link">Ver lugares</a>
+      </nav>
+    </div>
+  </header>
 
-    <td>
-      {% set p = promedios.get(l[0]) %}
-      {{ p[0] if p and p[0] is not none else "Sin reseñas" }}
-    </td>
+  <main class="public-main">
 
-    <td><a href = "/resena/{{ l[0] }}">Reseña</a></td>
-    <td><a href = "/resenas/{{ l[0] }}">Ver reseñas</a></td>
-  </tr>
-  {% endfor %}
-</table>
+    <!-- ===== SECCIÓN PRINCIPAL ===== -->
+    <section class="list-section" id="lista">
+      <div class="container">
+
+        <div class="section-header">
+          <h2>Lugares disponibles</h2>
+          <p>
+            Cada tarjeta muestra el nombre, la dirección y el promedio de estrellas
+            (si ya tiene reseñas registradas).
+          </p>
+        </div>
+
+        {% if lugares and lugares|length > 0 %}
+        <div class="results-grid">
+          {% for l in lugares %}
+            {# l[0]=id, l[1]=nombre, l[2]=direccion #}
+            <article class="place-card">
+              <div class="place-body">
+                <div class="place-top">
+                  <h3 class="place-title">{{ l[1] }}</h3>
+                  <span class="place-tag">Lugar</span>
+                </div>
+
+                <p class="place-address">{{ l[2] }}</p>
+
+                <p class="place-desc">
+                  {% set p = promedios.get(l[0]) %}
+                  <strong>Promedio de calificación:</strong>
+                  {% if p and p[0] is not none %}
+                    {{ "%.1f"|format(p[0]) }} ⭐
+                  {% else %}
+                    Sin reseñas todavía.
+                  {% endif %}
+                </p>
+
+                <div class="place-actions">
+                  <a class="btn btn-outline btn-small"
+                     href="/resena/{{ l[0] }}">
+                    Escribir reseña
+                  </a>
+
+                  <a class="btn btn-primary btn-small"
+                     href="/resenas/{{ l[0] }}">
+                    Ver reseñas
+                  </a>
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+        {% else %}
+          <div class="empty-block">
+            <h3>Aún no hay lugares registrados</h3>
+            <p>Cuando existan lugares en la base de datos aparecerán aquí.</p>
+          </div>
+        {% endif %}
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Proyecto Lugares · Vista pública de reseñas</p>
+    </div>
+  </footer>
 
 </body>
 </html>

@@ -1,21 +1,26 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from db_funciones import obtener_lugares, insertar_resena, obtener_promedio_por_lugar
-import duckdb 
+import duckdb
 import random
 
 DB_PATH = "lugares.db"
 
+
 def obtener_resenas_por_lugar_sql(lugar_id):
     con = duckdb.connect(DB_PATH)
     try:
-        return con.execute("""
+        return con.execute(
+            """
             SELECT resena_usuario_id, resena_estrellas, resena_comentario, resena_fecha
             FROM resena
             WHERE resena_lugar_id = ?
             ORDER BY resena_fecha DESC
-        """, [lugar_id]).fetchall()
+            """,
+            [lugar_id],
+        ).fetchall()
     finally:
         con.close()
+
 
 def rutas(app):
     @app.route("/resenas")
@@ -27,29 +32,34 @@ def rutas(app):
             p = obtener_promedio_por_lugar(lugar_id)
             promedios[lugar_id] = p
         return render_template("for_resenas.html", lugares=lugares, promedios=promedios)
-    
+
     @app.route("/resenas/<int:lugar_id>")
     def ver_resenas(lugar_id):
         resenas_lista = obtener_resenas_por_lugar_sql(lugar_id)
         p = obtener_promedio_por_lugar(lugar_id)
         promedio_final = p[0] if p and p[0] is not None else None
-        return render_template("ver_resena.html", lugar_id=lugar_id, resenas=resenas_lista, promedio=promedio_final)
-        
+        return render_template(
+            "ver_resena.html",
+            lugar_id=lugar_id,
+            resenas=resenas_lista,
+            promedio=promedio_final,
+        )
+
     @app.route("/resena/<int:lugar_id>")
     def formulario(lugar_id):
         if "usuario_id" not in session:
-            return "Inicia sesión para escribir reseñas."
+            return redirect(url_for("auth.login"))
         return render_template("resena.html", lugar_id=lugar_id)
-    
+
     @app.route("/lugares/<int:lugar_id>/resena", methods=["POST"])
     def resena(lugar_id):
         if "usuario_id" not in session:
-            return "Inicia sesión para escribir una reseña."
-        
+            return redirect(url_for("auth.login"))
+
         usuario_id = session["usuario_id"]
         comentario = (request.form.get("comentario") or "").strip()
         calificacion_raw = request.form.get("calificacion")
-        
+
         try:
             calificacion = int(calificacion_raw) if calificacion_raw else 0
         except ValueError:

@@ -14,8 +14,10 @@
   <header class="site-header">
     <div class="container header-inner">
       <div>
-        <h1 class="site-title">Lugares interesantes</h1>
-        <p class="site-lead">Explora sitios recomendados y abre el mapa al instante.</p>
+        <h1 class="site-title">Lugares Públicos Interesantes</h1>
+        <p class="site-lead">
+          Explora sitios recomendados y abre el mapa al instante.
+        </p>
       </div>
 
       <nav class="site-nav">
@@ -26,21 +28,22 @@
 
   <main class="public-main">
 
-    <!-- ===== HERO GRANDE ===== -->
+    <!-- ===== HERO ===== -->
     <section class="hero">
       <div class="container hero-wrap">
         <div class="hero-card">
           <div class="hero-content">
 
-            <!-- lado izquierdo -->
+            <!-- Lado izquierdo -->
             <div class="hero-text">
               <h2>Encuentra lugares con buena referencia</h2>
               <p>
-                Aquí se listan lugares con su dirección,
-                descripción y acceso al mapa. En "Ver mas detalle" puedes ver reseñas y
-                calificaciones.
+                Aquí podrás encontrar lugares públicos interesantes con su dirección, descripción y acceso al mapa.
+                En <strong>“Ver detalle”</strong> puedes consultar reseñas y calificaciones del lugar.
               </p>
+            </div>
 
+            <!-- Lado derecho (KPI) -->
             <div class="hero-side">
               <div class="kpi">
                 <p class="kpi-label">Lugares registrados</p>
@@ -48,28 +51,27 @@
                   {% if lugares %}{{ lugares|length }}{% else %}0{% endif %}
                 </p>
               </div>
+            </div>
 
-
-          </div> 
-        </div> 
-      </div> 
+          </div> <!-- /.hero-content -->
+        </div>   <!-- /.hero-card -->
+      </div>     <!-- /.container.hero-wrap -->
     </section>
 
-
-
-    <!-- ===== LISTADO DE LUGARES INTERESANTES== -->
+    <!-- ===== LISTADO DE LUGARES ===== -->
     <section class="list-section">
       <div class="container">
+
+        <div class="section-header">
+          <h2>Resultados</h2>
+          <p>Lista pública de lugares disponibles.</p>
+        </div>
 
         <div class="results-grid">
           {% if lugares %}
             {% for lugar in lugares %}
               {# 0:id, 1:nombre, 2:direccion, 3:mapa_url, 4:descripcion #}
               <article class="place-card">
-                <div class="place-media" aria-hidden="true">
-                  <div class="place-thumb"></div>
-                </div>
-
                 <div class="place-body">
                   <div class="place-top">
                     <h3 class="place-title">{{ lugar[1] }}</h3>
@@ -93,13 +95,12 @@
                       <span class="muted">Sin mapa</span>
                     {% endif %}
 
-                    <!-- aquí va al detalle (reseñas) del lugar específico -->
                     <a class="btn btn-primary btn-small"
                        href="/resenas/{{ lugar[0] }}">
                       Ver detalle
                     </a>
-                  </div> 
-                </div> 
+                  </div>
+                </div>
               </article>
             {% endfor %}
           {% else %}

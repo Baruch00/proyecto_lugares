@@ -2,27 +2,47 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Lugares interesantes{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>{% block title %}Panel administrador · Proyecto Lugares{% endblock %}</title>
+
+  <!-- Reutilizamos los estilos bonitos del panel -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
-<body>
-  <header class="site-header">
-    <h1 class="site-title">Lugares interesantes</h1>
-    <nav class="site-nav">
-      <a href="{{ url_for('index') }}">Inicio</a>
-      <a href="{{ url_for('stats') }}">Estadísticas</a>
-      <a href="{{ url_for('admin_lugares') }}">Administrar lugares</a>
-     
-    </nav>
-  </header>
+<body class="admin-page">
 
-  <main class="site-main">
-    {% block content %}
-    {% endblock %}
-  </main>
+  <div class="admin-container">
 
-  <footer class="site-footer">
-    <small>Proyecto Lugares · Equipo de tesis</small>
-  </footer>
+    <header class="admin-header">
+      <div>
+        <p class="admin-subtitle">Proyecto Lugares – Fieros Programadores</p>
+        <h1 class="admin-title">
+          {% block header_title %}Administración por parte de los Fieros{% endblock %}
+        </h1>
+      </div>
+
+      <nav class="admin-nav admin-nav-tabs">
+        <a href="{{ url_for('admin_lugares') }}" class="btn btn-outline btn-small">
+          Lugares
+        </a>
+        <a href="{{ url_for('stats') }}" class="btn btn-outline btn-small">
+          Estadísticas
+        </a>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-primary btn-small">
+          Cerrar sesión
+        </a>
+      </nav>
+    </header>
+
+    <main class="admin-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>Proyecto Lugares · Fieros Programadores</p>
+      </div>
+    </footer>
+
+  </div>
 </body>
 </html>

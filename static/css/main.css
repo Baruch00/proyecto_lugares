@@ -148,3 +148,14 @@ textarea:focus{
   outline: none;
   box-shadow: var(--focus);
 }
+
+.user-badge {
+  display: inline-block;
+  margin-right: 12px;
+  padding: 6px 14px;
+  background: #eef2ff;
+  border-radius: 16px;
+  font-size: 14px;
+  color: #3b3b3b;
+  font-weight: 600;
+}

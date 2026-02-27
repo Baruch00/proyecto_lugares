@@ -1,8 +1,5 @@
 /* =========================================================
-   admin.css (Panel Administrativo PRO)
-   - Azul / Celeste moderno
-   - SIN scroll horizontal
-   - Tabla adaptable (Opción A)
+   admin.css (Panel Administrativo)
 ========================================================= */
 
 /* ================= BASE ================= */
@@ -127,7 +124,7 @@
 
 .table-wrapper{
   width: 100%;
-  overflow-x: hidden; /* 🔥 ELIMINA SCROLL HORIZONTAL */
+  overflow-x: hidden; 
   border-radius: 14px;
   border: 1px solid var(--border-soft);
   margin-top: 10px;
@@ -136,9 +133,9 @@
 .table-admin{
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* 🔥 ADAPTA COLUMNAS */
-  min-width: 0;        /* 🔥 Quita el min-width */
-}
+  table-layout: fixed; 
+  min-width: 0;
+}      
 
 /* encabezado */
 .table-admin th{
@@ -156,14 +153,12 @@
   padding: 11px 10px;
   font-size: 14px;
   border-bottom: 1px solid var(--border-soft);
-
-  /* 🔥 ESTO PERMITE QUE TODO SE PARTA Y NO GENERE SCROLL */
   white-space: normal;
   word-break: break-word;
   overflow-wrap: anywhere;
 }
 
-/* zebra */
+
 .table-admin tbody tr:nth-child(even){
   background: rgba(2,6,23,0.02);
 }
@@ -172,7 +167,7 @@
   background: rgba(59,130,246,0.07);
 }
 
-/* ================= MAP LINK ================= */
+
 
 .map-link{
   display: inline-flex;
@@ -190,7 +185,7 @@
   text-decoration: none;
 }
 
-/* ================= FORM ================= */
+
 
 .form-group input,
 .form-group textarea{
@@ -214,4 +209,51 @@
 .form-group textarea{
   min-height: 140px;
   resize: vertical;
+}
+
+.admin-nav.admin-nav-tabs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+
+
+.form-group {
+  margin-bottom: 18px;          
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;            
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;                  
+  max-width: 450px;              
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.user-badge {
+  display: inline-block;
+  margin-right: 12px;
+  padding: 6px 14px;
+  background: #eef2ff;
+  border-radius: 16px;
+  font-size: 14px;
+  color: #3b3b3b;
+  font-weight: 600;
 }

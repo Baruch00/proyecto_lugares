@@ -7,28 +7,30 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/public.css') }}">
 </head>
-<body class="public-page">
 
+<body class="public-page">
 
   <header class="site-header">
     <div class="container header-inner">
       <div>
         <h1 class="site-title">Escribir reseña</h1>
         <p class="site-lead">
-          Cuéntanos tu experiencia sobre este lugar (ID {{ lugar_id }}).
+          Cuéntanos tu experiencia sobre este lugar.
         </p>
       </div>
 
       <nav class="site-nav">
-        <a href="/resenas/{{ lugar_id }}" class="nav-link">Ver reseñas del lugar</a>
-        <a href="{{ url_for('index') }}" class="nav-link nav-link-outline">Volver a lugares</a>
+        <a href="{{ url_for('admin_resenas', lugar_id=lugar_id) }}" class="nav-link">
+          Ver reseñas del lugar
+        </a>
+        <a href="{{ url_for('admin_lugares') }}" class="nav-link nav-link-outline">
+          Volver al panel
+        </a>
       </nav>
     </div>
   </header>
 
   <main class="public-main">
-
-    <!-- TARJETA CON EL FORMULARIO -->
     <section class="hero">
       <div class="container hero-wrap">
         <div class="hero-card">
@@ -38,7 +40,7 @@
               <h2>Deja tu reseña</h2>
               <p>
                 La calificación va de <strong>1 a 5 estrellas</strong>.
-                El comentario debe tener al menos <strong>10 caracteres</strong>.
+                Escribe un comentario de al menos <strong>10 caracteres</strong>.
               </p>
 
               <form
@@ -54,6 +56,7 @@
                     type="number"
                     min="1"
                     max="5"
+                    class="input-field"
                     required>
                 </div>
 
@@ -64,6 +67,7 @@
                     name="comentario"
                     rows="4"
                     minlength="10"
+                    class="input-field"
                     required></textarea>
                 </div>
 
@@ -72,19 +76,18 @@
                     Guardar reseña
                   </button>
 
-                  <a href="/resenas/{{ lugar_id }}" class="btn btn-outline">
+                  <a href="{{ url_for('admin_resenas', lugar_id=lugar_id) }}" class="btn btn-outline">
                     Cancelar
                   </a>
                 </div>
 
               </form>
 
-            </div> 
-          </div> 
-        </div> 
-      </div> 
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-
   </main>
 
   <footer class="site-footer">

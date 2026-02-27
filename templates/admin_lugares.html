@@ -1,105 +1,84 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Panel de administración de lugares</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
+{% extends "base.html" %}
 
-<body class="admin-page">
+{% block title %}Panel de administración de lugares{% endblock %}
+{% block header_title %}Administración por parte de los Fieros{% endblock %}
 
-<div class="admin-container">
+{% block content %}
 
-    <header class="admin-header">
-        <div class="admin-header-left">
-            <p class="admin-subtitle">Proyecto Lugares – Administración de los Fieros</p>
-            <h1 class="admin-title">Panel de administración de lugares</h1>
-        </div>
+<section class="admin-card">
 
-        <div class="admin-header-right">
-            {% if usuario_nombre %}
-                <span class="admin-welcome">Bienvenido, {{ usuario_nombre }}</span>
-                <a href="{{ url_for('logout') }}" class="admin-logout">Cerrar sesión</a>
-            {% else %}
-                <a href="{{ url_for('index') }}" class="link-quiet">← Volver al inicio</a>
-            {% endif %}
-        </div>
-    </header>
+  <div class="admin-card-header">
+    <div>
+      <h2>Administración de lugares</h2>
+      <p class="admin-card-subtitle">
+        Consulta, edita y elimina los lugares registrados.
+      </p>
+    </div>
 
-    <section class="admin-card">
-        <div class="admin-card-header">
-            <h2>Administración de lugares</h2>
-            <a href="{{ url_for('add') }}" class="btn-primary">➕ Agregar lugar</a>
-        </div>
+    <a href="{{ url_for('add') }}" class="btn-primary">Agregar lugar</a>
+  </div>
 
-        <div class="admin-card-body">
-            <div class="table-wrapper">
+  <div class="admin-card-body">
+    <div class="table-wrapper">
+      <table class="table-admin">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Mapa URL</th>
+            <th>Descripción</th>
+            <th>Usuario ID</th>
+            <th>Fecha registro</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
 
-                <table class="table-admin">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Dirección</th>
-                            <th>Mapa URL</th>
-                            <th>Descripción</th>
-                            <th>Usuario ID</th>
-                            <th>Fecha registro</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
+        <tbody>
+          {% for l in lugares %}
+          <tr>
+            <td>{{ l[0] }}</td>
+            <td>{{ l[1] }}</td>
+            <td>{{ l[2] }}</td>
 
-                    <tbody>
-                        {% for l in lugares %}
-                        <tr>
-                            <td>{{ l[0] }}</td>
-                            <td>{{ l[1] }}</td>
-                            <td>{{ l[2] }}</td>
+            <td>
+              {% if l[3] %}
+                <a href="{{ l[3] }}" target="_blank" class="map-link">
+                  Ver mapa
+                </a>
+              {% else %}
+                <span class="muted">Sin mapa</span>
+              {% endif %}
+            </td>
 
-                            <td>
-                                {% if l[3] %}
-                                    <a href="{{ l[3] }}" target="_blank" class="map-link">Ver mapa</a>
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </td>
+            <td>{{ l[4] }}</td>
+            <td>{{ l[5] }}</td>
+            <td>{{ l[6] }}</td>
 
-                            <td>{{ l[4] }}</td>
-                            <td>{{ l[5] }}</td>
-                            <td>{{ l[6] }}</td>
+            <td class="actions">
+              <a class="btn-link" href="{{ url_for('edit', lugar_id=l[0]) }}">
+                Editar
+              </a>
 
-                            <td class="actions">
-                                <!-- Editar -->
-                                <a class="btn-link" href="{{ url_for('edit', lugar_id=l[0]) }}">
-                                    ✏️ Editar
-                                </a>
+              <form method="POST"
+                    action="{{ url_for('delete', lugar_id=l[0]) }}"
+                    style="display:inline;"
+                    onsubmit="return confirm('¿Eliminar este lugar?');">
+                <button class="btn-delete" type="submit">Eliminar</button>
+              </form>
 
+              <a class="btn-link"
+                 href="{{ url_for('admin_resenas', lugar_id=l[0]) }}">
+                Reseñas
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-                                <form method="POST"
-                                        action="{{ url_for('delete_full', lugar_id=l[0]) }}"
-                                        style="display:inline;"
-                                        onsubmit="return confirm('Se eliminará el lugar y TODAS sus reseñas. ¿Continuar?');">
-                                    <button class="btn-delete" type="submit">🧨 Eliminar lugar + reseñas</button>
-                                </form>
+</section>
 
-
-                                <!-- 2) Administrar reseñas del lugar -->
-                                <a class="btn-link" href="{{ url_for('admin_resenas', lugar_id=l[0]) }}">
-                                    🛠️ Administrar reseñas
-                                </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-
-                </table>
-
-            </div>
-        </div>
-    </section>
-
-</div>
-
-</body>
-</html>
+{% endblock %}
